@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   },
   description:
     "Personalised meal plans, nutrition coaching, clinical nutrition and corporate wellness by Mitchell, a nutritionist in Nairobi, Kenya. Get your free starter meal plan.",
-  icons: { icon: "/images/logo.jpg" },
   openGraph: {
     title: "Nourished by Mitchell",
     description: "Personalised nutrition from Nairobi. Get your free starter meal plan.",

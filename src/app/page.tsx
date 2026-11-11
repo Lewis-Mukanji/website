@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import Portrait from "@/components/Portrait";
 import ScrollLitText from "@/components/ScrollLitText";
 import ServicesRail from "@/components/ServicesRail";
-import { site, whatsappLink } from "@/lib/site";
+import { whatsappLink } from "@/lib/site";
 
 const steps = [
   { n: "01", title: "Tell us about you", text: "A 2-minute quiz: your body, your goal, the foods you love and the ones you avoid." },
@@ -75,9 +74,8 @@ export default function Home() {
       {/* THE NUTRITIONIST */}
       <section className="relative overflow-hidden py-20 md:py-32">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:px-10 lg:grid-cols-2">
-          <div className="reveal relative mx-auto aspect-square w-full max-w-md">
-            <div className="glow-green breathe absolute inset-0" />
-            <Image src="/images/logo.jpg" alt={`${site.name} logo`} fill sizes="(min-width:1024px) 40vw, 80vw" className="object-contain" />
+          <div className="reveal mx-auto w-full max-w-[420px]">
+            <Portrait photo="scrubs" />
           </div>
           <div>
             <p className="eyebrow reveal">The nutritionist</p>
@@ -113,7 +111,7 @@ export default function Home() {
             </div>
             <p className="reveal max-w-md text-sm leading-relaxed text-muted md:justify-self-end md:text-base">
               From a single consultation to a full corporate wellness programme. Swipe through, then choose where
-              you'd like to begin.
+              you&apos;d like to begin.
             </p>
           </div>
         </div>

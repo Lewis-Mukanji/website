@@ -60,7 +60,7 @@ export default function About() {
             <div className="border-l-2 border-green pl-5 text-sm">
               <p className="text-ink">[Qualification, e.g. BSc Food, Nutrition & Dietetics, University name]</p>
               <p className="mt-1">
-                Registered with the Kenya Nutritionists and Dietitians Institute (KNDI)
+                Registered with the Kenya Nutritionists and Dieticians Institute (KNDI)
                 {site.kndiNumber ? ` · Reg. No. ${site.kndiNumber}` : " · Reg. No. [to add]"}
               </p>
             </div>

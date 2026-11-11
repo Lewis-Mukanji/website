@@ -23,17 +23,24 @@ export async function POST(req: Request) {
   if (body.consent !== true) return NextResponse.json({ error: "Please agree to be contacted." }, { status: 400 });
 
   const type = body.type === "meal-plan" ? "meal-plan" : "enquiry";
-  const lead = await addLead({
-    type,
-    name,
-    phone,
-    email: email || undefined,
-    service: clean(body.service, 160) || undefined,
-    preferred: clean(body.preferred, 40) || undefined,
-    message: clean(body.message, 3000) || undefined,
-    summary: clean(body.summary, 600) || undefined,
-    quiz: typeof body.quiz === "object" && body.quiz ? (body.quiz as Record<string, unknown>) : undefined,
-  });
+  let lead;
+  try {
+    lead = await addLead({
+      type,
+      name,
+      phone,
+      email: email || undefined,
+      service: clean(body.service, 160) || undefined,
+      preferred: clean(body.preferred, 40) || undefined,
+      message: clean(body.message, 3000) || undefined,
+      summary: clean(body.summary, 600) || undefined,
+      quiz: typeof body.quiz === "object" && body.quiz ? (body.quiz as Record<string, unknown>) : undefined,
+    });
+  } catch {
+    // Hosts like Vercel cannot write to local files. Until leads move to a database,
+    // tell the page so it can fall back to WhatsApp instead of failing.
+    return NextResponse.json({ error: "We could not save this right now.", fallback: true }, { status: 503 });
+  }
 
   return NextResponse.json({ ok: true, id: lead.id });
 }

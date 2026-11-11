@@ -3,29 +3,33 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-/** Fades elements with the `reveal` class in as they scroll into view. */
+/** Fades elements with the `reveal` class in as they scroll into view.
+ *  Anything already scrolled past (e.g. after a fast flick) is shown too. */
 export default function RevealObserver() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    const scan = () => document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => io.observe(el));
-    scan();
-    const mo = new MutationObserver(scan);
+    let raf = 0;
+    const check = () => {
+      const limit = window.innerHeight - 40;
+      document.querySelectorAll<HTMLElement>(".reveal:not(.is-visible)").forEach((el) => {
+        if (el.getBoundingClientRect().top < limit) el.classList.add("is-visible");
+      });
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(check);
+    };
+    check();
+    const mo = new MutationObserver(onScroll);
     mo.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
-      io.disconnect();
+      cancelAnimationFrame(raf);
       mo.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [pathname]);
 

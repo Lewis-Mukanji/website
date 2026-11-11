@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nourished by Mitchell: website (Phase 1)
 
-## Getting Started
-
-First, run the development server:
+## Run it on your computer
 
 ```bash
+cd website
+npm install      # first time only
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Mitchell's dashboard is at http://localhost:3000/admin.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where to edit things
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | File |
+| --- | --- |
+| Phone, Instagram, email, M-Pesa, KNDI number | `src/lib/site.ts` (top of file) |
+| Services, descriptions and **prices** | `src/lib/site.ts` (`serviceGroups`) |
+| Meal plan foods, portions, calorie rules | `src/lib/mealplan.ts` |
+| Mitchell's bio | `src/app/about/page.tsx` (replace the [bracketed] parts) |
+| FAQ answers | `src/app/faq/page.tsx` |
+| Tips & recipes | `src/app/tips/page.tsx` |
+| Logo / portrait | `public/images/` |
+| Dashboard password | `.env.local` (`ADMIN_PASSWORD`) |
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+Home, About, Services, Free Meal Plan (quiz, results and PDF), Tips & Recipes, FAQ, Contact (enquiry form),
+Privacy, and `/admin` (leads dashboard).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Leads
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Quiz submissions and enquiries are saved to `data/leads.json` (kept out of git; it holds personal data).
+Before going live on Vercel this moves to a hosted database (Supabase), because Vercel can't save files.
 
-## Deploy on Vercel
+## Before launch
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Fill in prices, bio details, KNDI number and business email in the files above.
+- Replace the placeholder testimonials on the home page with real ones (with permission).
+- Move leads to Supabase, add email/WhatsApp alerts for new leads, buy the domain, deploy to Vercel.
